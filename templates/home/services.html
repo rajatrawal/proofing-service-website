@@ -1,0 +1,49 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block css %}
+<style>
+
+
+</style>
+{% endblock css %}
+{% block body %}
+
+<div class="temp-div d-flex align-items-center justify-content-center">
+
+    <h1 class='white'>Tous les services</h1>
+
+</div>
+<div id="services" class="services section-bg">
+    <div class="container mb-4">
+
+        {% for category in categories %}
+        <h2 class="p-4 text-center fw-bold">{{category|title}}</h2>
+        <div class="mt-4 mb-4">
+            <div class="row ">
+                {% for service in category.services.all %}
+                <div class="col-xl-6 col-md-6 d-flex align-items-stretch justifyc" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="icon-box">
+                        <div class="text-center">
+
+                            <img src="{{service.images.first.image.url}}" class="img-thumbnail rounded-start mx" alt="{{service.images.first.image.alt_text}}">
+                        </div>
+
+                        <div class="mt-4">
+                            <h4><a href="/service/{{service.id}}">{{service.title|title}}</a></h4>
+                            <p>
+                                {{service.meta_description|truncatechars:150}}
+                            </p>
+                            <a href="/service/{{service.id}}" class="btn-get-started  mt-4 ">Explorer</a>
+                        </div>
+                    </div>
+
+                </div>
+                {% endfor %}
+            </div>
+
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock body %}

@@ -1,0 +1,276 @@
+{% extends 'home/base.html' %}
+{% load static %}
+<!-- ======= Hero Section ======= -->
+{% block body %}
+
+
+
+<section id="hero" class="d-flex align-items-center">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1"
+                data-aos="fade-up" data-aos-delay="200">
+                <h1>{{head_details.text}}</h1>
+
+                <div class="d-flex justify-content-center justify-content-lg-start">
+                    <a href="{% url 'services' %}" class="btn-get-started scrollto">Démarrer</a>
+                    <a href="{{head_details.video_link}}" class="glightbox btn-watch-video"><i class="bi bi-play-circle"></i><span>Regarder la
+                            vidéo</span></a>
+                </div>
+            </div>
+            <div class="col-lg-5 order-1 order-lg-2 hero-img " data-aos="zoom-in" data-aos-delay="200">
+                <img src="{% static 'img/home head.jpg' %}" class="img-fluid animated w-75" alt="">
+            </div>
+        </div>
+    </div>
+
+</section><!-- End Hero -->
+
+<main id="main">
+
+
+    <!-- ======= About Us Section ======= -->
+    <section id="about" class="about">
+        <div class="container" data-aos="fade-up">
+
+            <div class="section-title">
+                <h2>QUI SOMMES-NOUS</h2>
+            </div>
+
+            <div class="row content">
+                
+                 <p>
+                    {{about_us_text.text}}
+                 </p>
+                </div>
+            </div>
+
+        </div>
+    </section><!-- End About Us Section -->
+
+    <!-- ======= Services Section ======= -->
+    <section id="services" class="services section-bg">
+        <div class="container" data-aos="fade-up">
+
+            <div class="section-title">
+                <h2>PRESTATIONS DE SERVICE</h2>
+                <p>{{service_text.text}}</p>
+            </div>
+
+            <div class="row">
+                <div class="col-xl-6 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="icon-box">
+                        <div class="icon"><i class='bx bxs-hot'></i></div>
+                        <h4><a href="/services?category=Ignifugation">Ignifugation</a></h4>
+                        <p>Les services d'ignifugation fournissent une couche de défense essentielle, garantissant que
+                            votre propriété reste résiliente face aux risques d'incendie potentiels.</p>
+                    </div>
+                </div>
+
+                <div class="col-xl-6 col-md-6 d-flex align-items-stretch mt-4 mt-md-0" data-aos="zoom-in"
+                    data-aos-delay="200">
+                    <div class="icon-box">
+                        <div class="icon"><i class='bx bx-water'></i></div>
+                        <h4><a href="/services?category=insonorisation">Étanchéité</a></h4>
+                        <p>Les services d'imperméabilisation offrent une barrière fiable contre l'intrusion d'eau,
+                            protégeant votre propriété contre les dommages causés par l'humidité et préservant son
+                            intégrité structurelle.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+
+                <a href="{% url 'services' %}" class="btn-get-started scrollto mt-4 ">Explorer tous les services</a>
+            </div>
+        </div>
+    </section><!-- End Services Section -->
+
+    <!-- ======= Cta Section ======= -->
+    <section id="cta" class="cta">
+        <div class="container" data-aos="zoom-in">
+
+            <div class="row">
+                <div class="col-lg-9 text-center text-lg-start">
+                    <h3>Appelez-nous</h3>
+                    <p> {{contact_now_text.text}}</p>
+                </div>
+                <div class="col-lg-3 cta-btn-container text-center">
+                    <a class="cta-btn align-middle" href="#contact">Appelez-nous</a>
+                </div>
+            </div>
+
+        </div>
+    </section><!-- End Cta Section -->
+
+    <!-- ======= Portfolio Section ======= -->
+    <section id="portfolio" class="portfolio">
+        <div class="container" data-aos="fade-up">
+
+            <div class="section-title">
+                <h2>PORTEFEUILLE</h2>
+
+            </div>
+
+
+
+            <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
+            {% for service  in services %}
+                <div class="col-lg-4 col-md-6 portfolio-item ">
+                    <div class="portfolio-img"><img src="{{service.images.first.image.url}}" class="img-fluid" alt="">
+                    </div>
+                    <div class="portfolio-info">
+                        <h4>{{service.title}}</h4>
+                        <p>{{service.meta_title|truncatechars:60}}</p>
+                  
+                        <a href="/service/{{service.id}}" class="details-link" title="Plus de détails"><i
+                                class="bx bx-link"></i></a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+        </div>
+    </section><!-- End Portfolio Section -->
+
+    <!-- ======= Team Section ======= -->
+    <section id="team" class="team section-bg">
+        <div class="container" data-aos="fade-up">
+
+            <div class="section-title">
+                <h2>ÉQUIPE</h2>
+               
+            </div>
+
+            <div class="row">
+
+                <div class="col-lg-6" data-aos="zoom-in" data-aos-delay="100">
+                    {% for member in members %}
+                    <div class="member d-flex align-items-start">
+                        <div class="pic"><img src="{{member.image.url}}" class="img-fluid" alt=""></div>
+                        <div class="member-info">
+                            <h4>{{member.name|title}}</h4>
+                            <span>{{member.position}}</span>
+                            <p>{{member.description}}</p>
+                            <div class="social">
+                                {% for social in member.socials.all %}
+                                <a href="{{social.link}}"><i class="{{social.get_icon_class_display}}"></i></a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+    </section><!-- End Team Section -->
+
+
+
+    <!-- ======= Frequently Asked Questions Section ======= -->
+    <section id="faq" class="faq section-bg">
+        <div class="container" data-aos="fade-up">
+
+            <div class="section-title">
+                <h2>Questions fréquemment posées</h2>
+              
+            </div>
+
+            <div class="faq-list">
+                <ul>
+                    {% for faq in faqs %}
+                    <li data-aos="fade-up" data-aos-delay="100">
+                        <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" class="collapse"
+                            data-bs-target="#faq-list-1">{{faq.question}}<i
+                                class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+                        <div id="faq-list-1" class="collapse show" data-bs-parent=".faq-list">
+                            <p>
+                               {{faq.answer}}
+                            </p>
+                        </div>
+                    </li>
+                    {% endfor %}
+
+                </ul>
+            </div>
+
+        </div>
+    </section><!-- End Frequently Asked Questions Section -->
+
+    <!-- ======= Contact Section ======= -->
+    <section id="contact" class="contact">
+        <div class="container" data-aos="fade-up">
+
+            <div class="section-title">
+                <h2>Contact</h2>
+                <p>{{contact_text.text}}</p>
+            </div>
+
+            <div class="row">
+
+                <div class="col-lg-5 d-flex align-items-stretch">
+                    <div class="info">
+                        <div class="address">
+                            <i class="bi bi-geo-alt"></i>
+                            <h4>Emplacement:</h4>
+                            <p>{{company_details.address}}</p>
+                        </div>
+
+                        <div class="email">
+                            <i class="bi bi-envelope"></i>
+                            <h4>E-mail:</h4>
+                            <p>{{company_details.email}}</p>
+                        </div>
+
+                        <div class="phone">
+                            <i class="bi bi-phone"></i>
+                            <h4>Appel:</h4>
+                            <p>{{company_details.phone_number}}</p>
+                        </div>
+
+                        <iframe
+                            src="{{company_details.map_link}}"
+                            frameborder="0" style="border:0; width: 100%; height: 290px;" allowfullscreen></iframe>
+                    </div>
+
+                </div>
+
+                <div class="col-lg-7 mt-5 mt-lg-0 d-flex align-items-stretch">
+                    <form action="{% url 'contact' %}" method="post" role="form" class="php-email-form">
+                        {% csrf_token %}
+                        <input type="hidden" name="form_type" value="contact_form">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="name">Votre nom</label>
+                                <input type="text" name="name" class="form-control" id="name" required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="email">Votre e-mail</label>
+                                <input type="email" class="form-control" name="email" id="email" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="text" class="form-control" name="phone_number" id="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Message</label>
+                            <textarea class="form-control" name="description" rows="10" required></textarea>
+                        </div>
+                        <div class="my-3">
+                            <div class="loading">Chargement</div>
+                            <div class="error-message"></div>
+                            <div class="sent-message">Votre message a été envoyé. Merci!</div>
+                        </div>
+                        <div class="text-center"><button type="submit">Envoyer le message</button></div>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </section><!-- End Contact Section -->
+
+</main><!-- End #main -->
+{% endblock body %}
